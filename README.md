@@ -1,21 +1,23 @@
 # Warehouse Management System
 
-Ứng dụng quản lý tồn kho chạy trên Streamlit, dùng SQLite làm cơ sở dữ liệu nội bộ. Project hỗ trợ quản lý danh mục sản phẩm, ghi nhận nhập/xuất kho, import Excel hàng loạt, tra cứu tồn kho, cảnh báo dưới mức tồn tối thiểu và xuất báo cáo Excel/PDF.
+Ứng dụng quản lý tồn kho xây dựng bằng Streamlit và SQLite. Project phục vụ các nghiệp vụ cơ bản của kho: quản lý danh mục sản phẩm, nhập kho, xuất kho, import Excel, tra cứu tồn kho, cảnh báo tồn tối thiểu và xuất báo cáo Excel/PDF.
 
-## Tính Năng Chính
+## Tính năng
 
-- Dashboard tổng quan tồn kho theo thời gian thực.
-- Quản lý danh mục sản phẩm với mã sản phẩm tự sinh theo format `SP###`.
-- Ghi nhận giao dịch nhập kho và xuất kho thủ công.
-- Import hàng loạt giao dịch nhập/xuất kho từ file Excel.
-- Import hàng loạt sản phẩm mới từ file Excel, tự sinh mã sản phẩm.
-- Đối chiếu `Mã kho` khi import giao dịch để tránh nhập/xuất nhầm kho.
-- Tra cứu tồn kho, lọc sản phẩm và xem trạng thái cảnh báo.
-- Nhật ký giao dịch có lọc theo sản phẩm, thời gian và loại giao dịch.
-- Xuất báo cáo tồn kho ra `.xlsx` và `.pdf`.
-- Dữ liệu lưu trong SQLite, không cần server database riêng.
+- Dashboard tổng quan tồn kho.
+- Quản lý danh mục sản phẩm.
+- Tự sinh mã sản phẩm theo format `SP001`, `SP002`, `SP003`, ...
+- Ghi nhận nhập kho và xuất kho thủ công.
+- Import sản phẩm hàng loạt từ Excel.
+- Import giao dịch nhập/xuất kho hàng loạt từ Excel.
+- Kiểm tra tồn kho trước khi xuất.
+- Đối chiếu `Mã kho` khi import giao dịch.
+- Tra cứu tồn kho theo sản phẩm, nhóm hàng và trạng thái.
+- Nhật ký giao dịch có bộ lọc và phân trang.
+- Xuất báo cáo tồn kho ra Excel và PDF.
+- Lưu dữ liệu bằng SQLite, không cần cài database server riêng.
 
-## Công Nghệ Sử Dụng
+## Công nghệ sử dụng
 
 - Python 3.10+
 - Streamlit
@@ -24,52 +26,59 @@
 - Plotly
 - OpenPyXL
 - fpdf2
-- Ionicons SVG cho hệ icon giao diện
+- Ionicons SVG
 
-## Cấu Trúc Project
+## Cấu trúc thư mục
 
 ```text
-.
-├── app.py                         # Giao diện Streamlit
-├── db.py                          # Lớp truy cập SQLite và dữ liệu mẫu
-├── logic.py                       # Nghiệp vụ tồn kho, import/export, báo cáo
-├── inventory.db                   # SQLite database local
-├── requirements.txt               # Danh sách thư viện Python cần cài
-├── .streamlit/
-│   └── config.toml                # Theme Streamlit
-├── scripts/
-│   └── reset_inventory_data.py    # Reset dữ liệu mẫu vào SQLite
-└── ionicons.designerpack/         # Bộ icon SVG dùng trong giao diện
+app.py
+db.py
+logic.py
+requirements.txt
+README.md
+.streamlit/config.toml
+scripts/reset_inventory_data.py
+ionicons.designerpack/
+feather/
 ```
 
-## Yêu Cầu Môi Trường
+Trong đó:
+
+- `app.py`: giao diện Streamlit.
+- `db.py`: kết nối SQLite, schema và dữ liệu mẫu.
+- `logic.py`: nghiệp vụ tồn kho, import/export Excel, xuất PDF.
+- `requirements.txt`: danh sách thư viện cần cài.
+- `scripts/reset_inventory_data.py`: reset database về dữ liệu mẫu.
+- `ionicons.designerpack/`: bộ icon đang dùng trong giao diện.
+
+## Yêu cầu môi trường
 
 - Python 3.10 trở lên.
-- `pip` đi kèm Python.
+- pip.
 - Trình duyệt web hiện đại.
 
-Kiểm tra Python:
+Kiểm tra phiên bản Python:
 
 ```powershell
 python --version
 ```
 
-## Cài Đặt
+## Cài đặt
 
-Clone project về máy:
+Clone repository:
 
 ```powershell
-git clone <repository-url>
-cd <ten-thu-muc-project>
+git clone https://github.com/ngoquangphuc29306/Management-inventory.git
+cd Management-inventory
 ```
 
-Tạo virtual environment:
+Tạo môi trường ảo:
 
 ```powershell
 python -m venv .venv
 ```
 
-Kích hoạt virtual environment trên Windows PowerShell:
+Kích hoạt môi trường ảo trên Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -81,85 +90,96 @@ Nếu dùng Command Prompt:
 .venv\Scripts\activate.bat
 ```
 
-Nếu dùng macOS/Linux:
+Nếu dùng macOS hoặc Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
-Cài dependencies:
+Cài thư viện:
 
 ```powershell
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Chạy Ứng Dụng
+## Chạy ứng dụng
 
-Chạy Streamlit:
+Chạy app:
 
 ```powershell
 streamlit run app.py
 ```
 
-Sau khi chạy, mở trình duyệt tại:
+Mở trình duyệt tại:
 
 ```text
 http://localhost:8501
 ```
 
-Nếu port `8501` đang được dùng, chạy bằng port khác:
+Nếu port `8501` đã được dùng, chạy bằng port khác:
 
 ```powershell
 streamlit run app.py --server.port 8502
 ```
 
-## Dữ Liệu Và SQLite
+## Dữ liệu SQLite
 
-Ứng dụng dùng file `inventory.db` làm database local. Nếu file này chưa tồn tại hoặc chưa có dữ liệu, app sẽ tự khởi tạo bảng và nạp dữ liệu mẫu.
+Ứng dụng dùng file `inventory.db` để lưu dữ liệu local. File này được ignore khỏi Git để tránh đẩy dữ liệu vận hành lên repository.
+
+Khi chạy app lần đầu, nếu chưa có dữ liệu, hệ thống sẽ tự tạo database và nạp dữ liệu mẫu.
 
 Các bảng chính:
 
 - `san_pham`: danh mục sản phẩm.
 - `giao_dich`: nhật ký nhập/xuất kho.
 
-Cột `Mã kho` được lưu nội bộ bằng tên `ma_kho`. Đây là mã kho thực tế như `KHO-01`, `KHO-02`, `KHO-03`, không phải vị trí kệ.
+Một số cột quan trọng:
 
-## Reset Dữ Liệu Mẫu
+- `ma_sp`: mã sản phẩm.
+- `ten_sp`: tên sản phẩm.
+- `don_vi_tinh`: đơn vị tính.
+- `ton_toi_thieu`: mức tồn tối thiểu.
+- `nhom_hang`: nhóm hàng.
+- `ma_kho`: mã kho thực tế, ví dụ `KHO-01`, `KHO-02`.
 
-Khi muốn đưa database về dữ liệu mẫu ban đầu:
+## Reset dữ liệu mẫu
+
+Chạy lệnh sau để reset database về dữ liệu mẫu:
 
 ```powershell
 python scripts\reset_inventory_data.py
 ```
 
-Lệnh này sẽ ghi lại dữ liệu mẫu vào SQLite.
+## Quy tắc nghiệp vụ
 
-## Quy Tắc Nghiệp Vụ
+### Thêm sản phẩm
 
-### Thêm Sản Phẩm
+Thêm sản phẩm nghĩa là khai báo một mặt hàng mới vào danh mục. Hệ thống tự sinh mã sản phẩm theo format `SP###`.
 
-Thêm sản phẩm dùng để khai báo một mặt hàng mới vào danh mục. Hệ thống tự sinh mã sản phẩm theo format:
+Ví dụ:
 
-```text
-SP001, SP002, SP003, ...
-```
+- `SP001`
+- `SP002`
+- `SP003`
 
-Tên sản phẩm không được trùng với sản phẩm đã có trong danh mục.
+Tên sản phẩm không được trùng với sản phẩm đã có.
 
-### Nhập Kho Và Xuất Kho
+### Nhập kho
 
-Nhập kho/xuất kho là giao dịch làm thay đổi số lượng tồn của sản phẩm đã có trong danh mục.
+Nhập kho làm tăng số lượng tồn của một sản phẩm đã có trong danh mục.
 
-- Nhập kho: tăng số lượng tồn.
-- Xuất kho: giảm số lượng tồn.
-- Không cho xuất nếu số lượng tồn không đủ.
-- Giao dịch thủ công tự lấy `Mã kho` từ sản phẩm trong danh mục.
-- Import Excel có thể kèm `Mã kho`; nếu điền thì phải khớp với mã kho trong danh mục.
+### Xuất kho
 
-## Định Dạng File Excel
+Xuất kho làm giảm số lượng tồn của một sản phẩm đã có trong danh mục.
 
-### File Import Sản Phẩm
+Hệ thống không cho xuất nếu số lượng tồn hiện tại không đủ.
+
+### Mã kho
+
+`Mã kho` là mã kho thực tế của sản phẩm, không phải vị trí kệ. Khi import giao dịch Excel, nếu file có cột `Mã kho`, giá trị này phải khớp với mã kho trong danh mục sản phẩm.
+
+## File Excel import sản phẩm
 
 File sản phẩm không cần cột mã sản phẩm vì hệ thống tự sinh mã.
 
@@ -174,9 +194,9 @@ Cột tùy chọn:
 
 | Cột | Ghi chú |
 | --- | --- |
-| Tồn tối thiểu | Nếu trống, mặc định là `5` |
-| Nhóm hàng | Nếu trống, mặc định là `Chưa phân loại` |
-| Mã kho | Ví dụ: `KHO-01` |
+| Tồn tối thiểu | Nếu trống, mặc định là 5 |
+| Nhóm hàng | Nếu trống, mặc định là Chưa phân loại |
+| Mã kho | Ví dụ: KHO-01 |
 
 Ví dụ:
 
@@ -185,7 +205,7 @@ Ví dụ:
 | Bút chì 2B G-Star | Cây | 10 | Văn phòng phẩm | KHO-01 |
 | Bìa lá A4 xanh | Xấp | 5 | Văn phòng phẩm | KHO-01 |
 
-### File Import Giao Dịch
+## File Excel import giao dịch
 
 Cột bắt buộc:
 
@@ -199,7 +219,7 @@ Cột tùy chọn:
 | Cột | Ghi chú |
 | --- | --- |
 | Mã kho | Nếu điền thì phải khớp với danh mục |
-| Ghi chú | Nội dung ghi chú giao dịch |
+| Ghi chú | Ghi chú giao dịch |
 | Ngày giờ | Nếu trống, hệ thống dùng thời điểm import |
 
 Ví dụ:
@@ -209,22 +229,22 @@ Ví dụ:
 | SP001 | 50 | KHO-01 | Nhập bổ sung |
 | SP002 | 3 | KHO-01 |  |
 
-Lưu ý: tránh nhập dữ liệu rác ngoài vùng bảng trong Excel. Nếu có ký tự thừa ở các ô xa bảng, Excel có thể hiểu các dòng trống là một phần dữ liệu.
+Lưu ý: không để dữ liệu rác ngoài vùng bảng trong Excel. Nếu có ký tự thừa ở các ô xa bảng, Excel có thể khiến hệ thống đọc thêm các dòng trống.
 
-## Xuất Báo Cáo
+## Xuất báo cáo
 
 Trang `Xuất Bản Báo cáo` hỗ trợ:
 
-- Tải file Excel báo cáo tồn kho.
-- Tạo file PDF báo cáo tồn kho.
+- Tải báo cáo tồn kho dạng Excel.
+- Tạo và tải báo cáo tồn kho dạng PDF.
 
-PDF được tạo theo yêu cầu: bấm `Tạo file PDF Báo cáo (.pdf)` trước, sau đó bấm nút tải PDF hiện ra. Cách này giúp trang báo cáo mở nhanh hơn vì app không tạo PDF ngay khi vào tab.
+PDF được tạo theo yêu cầu. Bấm `Tạo file PDF Báo cáo (.pdf)` trước, sau đó nút tải PDF sẽ xuất hiện.
 
-## Lỗi Thường Gặp
+## Lỗi thường gặp
 
-### Không chạy được `streamlit`
+### Không chạy được streamlit
 
-Kiểm tra virtual environment đã được kích hoạt và dependencies đã cài:
+Kiểm tra đã kích hoạt môi trường ảo và cài dependencies:
 
 ```powershell
 pip install -r requirements.txt
@@ -240,28 +260,19 @@ streamlit run app.py --server.port 8502
 
 ### Import Excel báo lỗi dòng trống
 
-Nguyên nhân thường gặp là trong file Excel có ô rác nằm ngoài bảng, ví dụ một ký tự ở cột xa hoặc dòng xa. Xóa các dòng/cột thừa rồi lưu lại file.
+Nguyên nhân thường gặp là file Excel có ô rác ngoài vùng bảng. Hãy xóa các dòng/cột thừa rồi lưu lại file.
 
 ### PDF lỗi font tiếng Việt
 
-Trên Windows, app dùng font Arial hệ thống tại:
+Trên Windows, app dùng font Arial hệ thống. Nếu chạy trên Linux hoặc macOS và PDF bị lỗi tiếng Việt, cần cài font Unicode phù hợp hoặc chỉnh đường dẫn font trong `logic.py`.
 
-```text
-C:\Windows\Fonts\arial.ttf
-C:\Windows\Fonts\arialbd.ttf
-```
+## Ghi chú deploy
 
-Nếu chạy trên Linux/macOS và PDF bị lỗi tiếng Việt, cần cài font Unicode phù hợp hoặc điều chỉnh đường dẫn font trong `logic.py`.
+SQLite phù hợp cho app nhỏ hoặc chạy local. Nếu triển khai cho nhiều người dùng ghi dữ liệu cùng lúc, nên cân nhắc chuyển sang PostgreSQL hoặc MySQL.
 
-## Ghi Chú Khi Deploy
+Không nên commit dữ liệu thật lên repository. File `inventory.db` đã được đưa vào `.gitignore`.
 
-Project này phù hợp để chạy local hoặc deploy dạng Streamlit app đơn giản. Nếu deploy cho nhiều người dùng đồng thời, cần lưu ý:
-
-- SQLite phù hợp cho app nhỏ/local; với nhiều user ghi dữ liệu cùng lúc nên cân nhắc PostgreSQL/MySQL.
-- Không commit dữ liệu thật hoặc thông tin nhạy cảm vào repository.
-- Nên backup `inventory.db` định kỳ nếu dùng trong vận hành thật.
-
-## Lệnh Nhanh
+## Lệnh nhanh
 
 ```powershell
 python -m venv .venv
@@ -278,6 +289,4 @@ python scripts\reset_inventory_data.py
 
 ## License
 
-Chưa khai báo license. Nếu phát hành công khai, nên bổ sung file `LICENSE` phù hợp với mục đích sử dụng.
-#   M a n a g e m e n t - i n v e n t o r y  
- 
+Project hiện chưa khai báo license. Nếu phát hành công khai, nên bổ sung file `LICENSE`.
