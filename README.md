@@ -279,3 +279,5 @@ python scripts\reset_inventory_data.py
 ## License
 
 Chưa khai báo license. Nếu phát hành công khai, nên bổ sung file `LICENSE` phù hợp với mục đích sử dụng.
+#   M a n a g e m e n t - i n v e n t o r y  
+ 
